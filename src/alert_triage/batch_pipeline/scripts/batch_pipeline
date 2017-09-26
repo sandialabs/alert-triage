@@ -1,0 +1,70 @@
+#!/usr/bin/env python2.7
+
+import optparse
+
+from alert_triage.batch_pipeline import batch_pipeline
+
+def parse_opts_and_args():
+
+    parser = optparse.OptionParser()
+
+    # This option allows you to turn on feature selection as a
+    # separate processing step.
+    parser.add_option("-s", "--select_features", action="store_true",
+                      dest="select_features")
+    parser.add_option("-e", "--dont_extract_features", action="store_false",
+                      dest="extract_features")
+    parser.add_option("-d", "--save_feature_db", action="store_false",
+                      dest="delete_feature_db")
+    parser.add_option("-f", "--dont_write_feature_db", action="store_false",
+                      dest="write_feature_db")
+    parser.add_option("-n", "--database_name", action="store", type="string",
+                      dest="database")
+    parser.add_option("-c", "--feature_collection_name", action="store",
+                      type="string", dest="feature_collection_name")
+    parser.add_option("-b", "--dont_build_model", action="store_false",
+                      dest="build_model")
+    parser.add_option("-m", "--model", action="store", type="string",
+                      dest="model")
+    parser.add_option("-v", "--cross_validation", action="store_true",
+                      dest="cross_validation")
+    parser.add_option("-t", "--test", action="store_true", dest="test")
+
+    return parser.parse_args()
+
+def set_instance_vars(batch_pipeline, options, args):
+
+    if options.select_features:
+        batch_pipeline.enable_feature_selection()
+    if not options.extract_features:
+        # TODO: where did this method go?
+        # batch_pipeline.disable_feature_extraction()
+        pass
+    if not options.delete_feature_db:
+        # TODO: and this one?
+        # batch_pipeline.disable_overwrite_feature_db()
+        pass
+    if not options.write_feature_db:
+        # TODO: how about this one?
+        # batch_pipeline.disable_write_feature_db()
+        pass
+    if options.database:
+        batch_pipeline.change_database(args.database)
+    if options.feature_collection_name:
+        batch_pipeline.change_feature_collection_name(args.feature_collection_name)
+    if not options.build_model:
+        # TODO: someone deleted a lot of methods...
+        # batch_pipeline.disable_build_model()
+        pass
+    if options.model:
+        batch_pipeline.change_model(args.model)
+    if options.cross_validation:
+        batch_pipeline.enable_cross_validation()
+    if options.test:
+        batch_pipeline.enable_testing()
+
+if __name__ == "__main__":
+    options, args = parse_opts_and_args()
+    batch_pipeline = batch_pipeline.BatchPipeline()
+    set_instance_vars(batch_pipeline, options, args)
+    # batch_pipeline.run_pipeline()

@@ -1,0 +1,24 @@
+#sudo apt-get install gfortran libopenblas-dev liblapack-dev
+
+simplejson
+python-dateutil
+pygeoip
+pymongo
+gensim
+stomp.py
+numpy
+scipy
+scikit-learn==0.14.1
+requests
+
+
+
+#nose
+#numpy
+#scipy
+#gensim
+#python-dateutil
+#pygeoip
+#scikit-learn
+#pymongo
+#metrics
